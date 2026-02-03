@@ -1,3 +1,5 @@
+'use client';
+
 import { Users, MessageSquare, LineChart, Calendar } from 'lucide-react';
 import { EngagementChart } from '../components/EngagementChart';
 
