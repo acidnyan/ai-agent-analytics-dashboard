@@ -1,7 +1,12 @@
 'use client';
 
 import { Users, MessageSquare, LineChart, Calendar } from 'lucide-react';
-import { EngagementChart } from '../components/EngagementChart';
+import dynamic from 'next/dynamic';
+
+const EngagementChart = dynamic(() => import('../components/EngagementChart').then(mod => mod.EngagementChart), { 
+  ssr: false,
+  loading: () => <div className="h-64 bg-slate-900 animate-pulse rounded-xl" />
+});
 
 export default function Dashboard() {
   return (
