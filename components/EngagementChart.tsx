@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from './ui-card';
 
@@ -14,24 +14,45 @@ const data = [
   { name: 'Sun', followers: 3490, engagement: 4300 },
 ];
 
-export const EngagementChart = () => (
-  <Card className="col-span-2">
-    <CardHeader>
-      <CardTitle>Engagement Growth</CardTitle>
-    </CardHeader>
-    <CardContent className="h-64">
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-          <XAxis dataKey="name" stroke="#94a3b8" />
-          <YAxis stroke="#94a3b8" />
-          <Tooltip 
-            contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155' }}
-            itemStyle={{ color: '#38bdf8' }}
-          />
-          <Area type="monotone" dataKey="engagement" stroke="#38bdf8" fill="#38bdf8" fillOpacity={0.1} />
-        </AreaChart>
-      </ResponsiveContainer>
-    </CardContent>
-  </Card>
-);
+export const EngagementChart = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Card className="col-span-2">
+        <CardHeader>
+          <CardTitle>Engagement Growth</CardTitle>
+        </CardHeader>
+        <CardContent className="h-64 flex items-center justify-center text-slate-500">
+          Loading charts...
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="col-span-2">
+      <CardHeader>
+        <CardTitle>Engagement Growth</CardTitle>
+      </CardHeader>
+      <CardContent className="h-64">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+            <XAxis dataKey="name" stroke="#94a3b8" />
+            <YAxis stroke="#94a3b8" />
+            <Tooltip 
+              contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155' }}
+              itemStyle={{ color: '#38bdf8' }}
+            />
+            <Area type="monotone" dataKey="engagement" stroke="#38bdf8" fill="#38bdf8" fillOpacity={0.1} />
+          </AreaChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
+  );
+};
